@@ -1,0 +1,123 @@
+﻿@model IEnumerable<DoAn.Models.OrderDetail>
+
+<div class="container my-5">
+    <h2 class="mb-4 text-center">Chi tiết đặt hàng</h2>
+
+    <!-- Order Timeline -->
+    <div class="row justify-content-between align-items-center mb-4">
+        <!-- Step 1: Đơn Hàng Đã Đặt -->
+        <div class="col d-flex align-items-center justify-content-center">
+            <div class="bg-success text-white rounded-circle d-flex justify-content-center align-items-center" style="width: 60px; height: 60px;">
+                <i class="bi bi-check fs-4"></i> <!-- Icon size adjusted -->
+            </div>
+            <div class="ms-2">
+                <h6 class="mb-1">Đơn Hàng Đã Đặt</h6>
+            </div>
+        </div>
+
+        <!-- Step 2: Đơn Hàng Đã Thanh Toán -->
+        <div class="col d-flex align-items-center justify-content-center">
+                <div class="bg-secondary text-white rounded-circle d-flex justify-content-center align-items-center" style="width: 60px; height: 60px;">
+                    <i class="bi bi-cash fs-4"></i> <!-- Icon size adjusted -->
+                </div>
+                <div class="ms-2">
+                    <h6 class="mb-1">Đã Thanh Toán</h6>
+                </div>
+            </div>
+
+        <!-- Step 3: Đã Giao Cho ĐVVC -->
+        <div class="col d-flex align-items-center justify-content-center">
+            <div class="bg-secondary text-white rounded-circle d-flex justify-content-center align-items-center" style="width: 60px; height: 60px;">
+                <i class="bi bi-truck fs-4"></i> <!-- Icon size adjusted -->
+            </div>
+            <div class="ms-2">
+                <h6 class="mb-1">Đã Giao Cho ĐVVC</h6>
+            </div>
+        </div>
+
+        <!-- Step 4: Chờ Giao Hàng -->
+        <div class="col d-flex align-items-center justify-content-center">
+            <div class="bg-secondary text-white rounded-circle d-flex justify-content-center align-items-center" style="width: 60px; height: 60px;">
+                <i class="bi bi-box-seam fs-4"></i> <!-- Icon size adjusted -->
+            </div>
+            <div class="ms-2">
+                <h6 class="mb-1">Chờ Giao Hàng</h6>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Details Table -->
+    <div class="table-responsive mb-4">
+        <a href="/User/DanhSachHang" class="btn btn-primary mb-3">Về Trang Hóa Đơn</a>
+        <table class="table table-bordered table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th class="py-3 font-weight-medium">Mã Đơn</th>
+                    <th class="py-3 font-weight-medium">Ngày Lập</th>
+                    <th class="py-3 font-weight-medium">Tên Người Nhận</th>
+                    <th class="py-3 font-weight-medium">SĐT</th>
+                    <th class="py-3 font-weight-medium">Địa chỉ</th>
+                    <th class="py-3 font-weight-medium">Tổng Tiền</th>
+                    <th class="py-3 font-weight-medium">Phương Thức</th>
+                    <th class="py-3 font-weight-medium">Thanh Toán</th>
+                    <th class="py-3 font-weight-medium">Trạng Thái</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var order in Model)
+                {
+                    <tr>
+                        <td>@order.CodeOrder</td>
+                        <td>@order.NgayDatHang.ToString("dd/MM/yyyy")</td> <!-- Format date to a readable format -->
+                        <td>@order.TenNguoiNhan</td>
+                        <td>@order.SDT</td>
+                        <td>@order.DiaChi</td>
+                        <td>@order.TongTien.ToString("C2")</td> <!-- Format currency -->
+                        <td>@order.PhuongThucThanhToan</td>
+                        <td>@order.TinhTrangThanhToan</td>
+                        <td>
+                            <span class="badge bg-success text-white">@order.Status</span>
+                        </td>
+                    </tr>
+                    break;
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Product Details Table -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th class="py-3 font-weight-medium">Mã Sản Phẩm</th>
+                    <th class="py-3 font-weight-medium">Tên Sản Phẩm</th>
+                    <th class="py-3 font-weight-medium">Số Lượng</th>
+                    <th class="py-3 font-weight-medium">Size</th>
+                    <th class="py-3 font-weight-medium">Giá Tiền</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model)
+                {
+                    foreach (var product in order.SanPhams)
+                    {
+                        <tr>
+                            <td>@product.IdSanPham</td> <!-- Product ID (or Name if you prefer) -->
+                            <td>@product.TenSP</td>
+                            <td>@product.SoLuong</td>
+                            <td>@product.LoaiSize</td>
+                            <td>@product.GiaSanPham.ToString("C2")</td> <!-- Format currency -->
+                        </tr>
+                    }
+                    <tr>
+                        <td colspan="4" class="text-end font-weight-bold">Tổng Thành Tiền:</td>
+                        <td class="font-weight-bold">@order.TongTien.ToString("C2")</td> <!-- Format currency -->
+                    </tr>
+                    break;
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

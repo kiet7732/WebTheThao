@@ -1,0 +1,109 @@
+﻿@using DoAn.Models
+@{
+    ViewBag.Title = "Shop";
+    WebBanHangEntities Data = new WebBanHangEntities();
+}
+
+<main>
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-3 col-lg-4 col-md-5">
+                <!-- Left Sidebar -->
+                <div class="sidebar-filter">
+                    <div class="top-filter-head">Mục sản phẩm</div>
+                    <div class="common-filter">
+                            <button id="clear-filters">Xóa Bộ Lọc</button>
+                        <div class="head">Loại</div>
+                        <form action="#">
+                            <ul>
+                                @{
+                                    var loaiSanPhamListL = Data.LoaiSanPham.Select(x => new
+                                    {
+                                        IdLoaiSanPham = x.IdLoaiSanPham,
+                                        TenLoaiSanPham = x.TenLoaiSanPham
+                                    }).ToList();
+
+                                    foreach (var item in loaiSanPhamListL)
+                                    {
+                                        <li class="filter-list">
+                                            <input class="pixel-radio" type="radio" id="loai_@item.IdLoaiSanPham" name="loaiSanPham" value="@item.IdLoaiSanPham">
+                                            <label for="loai_@item.IdLoaiSanPham">@item.TenLoaiSanPham</label>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </form>
+                    </div>
+                    <div class="common-filter">
+                        <div class="head">Hãng</div>
+                        <form action="#">
+                            <ul>
+                                @{
+                                    var loaiSanPhamListH = Data.HangSanPham.Select(x => new
+                                    {
+                                        IdHangSanPham = x.IdHangSanPham,
+                                        TenHangSanPham = x.TenHangSanPham
+                                    }).ToList();
+
+                                    foreach (var item in loaiSanPhamListH)
+                                    {
+                                        <li class="filter-list">
+                                            <input class="pixel-radio" type="radio" id="hang_@item.IdHangSanPham" name="hangSanPham" value="@item.IdHangSanPham">
+                                            <label for="hang_@item.IdHangSanPham">@item.TenHangSanPham</label>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </form>
+                    </div>
+
+                    <!-- Price Filter -->
+                    @*<div class="common-filter">
+                        <div class="head">Price</div>
+                        <div class="price-range-area">
+                            <div id="price-range"></div>
+                            <div class="value-wrapper d-flex">
+                                <div class="price">Price:</div>
+                                <span>$</span>
+                                <div id="lower-value">0</div>
+                                <div class="to">to</div>
+                                <span>$</span>
+                                <div id="upper-value">1000</div>
+                            </div>
+                        </div>
+                    </div>*@
+                </div>
+                <!-- End Left Sidebar -->
+            </div>
+
+            <div class="col-xl-9 col-lg-8 col-md-7">
+                <!-- Start Product Section -->
+                <section class="product-section mt-5">
+                    <div class="container mt-5">
+                        <div class="row" id="product-list">
+                            <!-- Products will be dynamically inserted here by JavaScript -->
+                        </div>
+                    </div>
+                </section>
+                <!-- End Product Section -->
+            </div>
+
+            <!-- Pagination controls -->
+            <nav aria-label="Page navigation">
+                <ul id="pagination-controls" class="pagination justify-content-center"></ul>
+            </nav>
+
+           
+            <script>
+                    // Define product data for the script
+                    window.productData = [
+                        @foreach (var product in Data.SanPham.ToList()) 
+                         {
+                            @: { id: "@product.IdSanPham", name: "@product.TenSanPham", price: "@string.Format("{0:N0}", @product.GiaSanPham)", image: "@Url.Content(product.LinkHinhAnh)", loaiSanPham: "@product.LoaiSanPham", hangSanPham: "@product.HangSanPham" },
+                         }
+                    ];
+            </script>
+
+        </div>
+    </div>
+</main>

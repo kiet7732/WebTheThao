@@ -1,0 +1,41 @@
+﻿@model DoAn.Models.Users
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.Message
+    </div>
+}
+<section id="loginSection" class="login_box_area section_gap ">
+    <div class="login_form_inner mx-auto">
+        <h3>Log in</h3>
+        @using (Html.BeginForm("LoginUser", "User", FormMethod.Post))
+        {
+
+            <div class="col-md-12 form-group">
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "Username", onfocus = "this.placeholder = ''", onblur = "this.placeholder = 'Username'" })
+                @Html.ValidationMessageFor(m => m.UserName)
+            </div>
+            <div class="col-md-12 form-group">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password", onfocus = "this.placeholder = ''", onblur = "this.placeholder = 'Password'" })
+                @Html.ValidationMessageFor(m => m.Password)
+            </div>
+            <div class="col-md-12 form-group">
+                <div class="col-md-12 form-group d-flex justify-content-end -mt-2.5">
+                    <a href="/User/RegisterUser" class="create-account" id="registerLink">Tạo Tài Khoản</a>
+                </div>
+            </div>
+            <tr>
+                <td class="text-center">
+                    <a class="aaa" href="@ViewBag.response" style="color: #FF0600">
+                        <i class="fa-brands fa-google"></i> Đăng nhập với Google
+                    </a>
+                </td>
+                
+            </tr>
+            <div class="col-md-12 form-group my-10">
+                <button type="submit" class="btn btn-outline-black btn-sm btn-block ">LOG IN</button>
+            </div>
+            <a href="/User/ForgotPassword">Quên Mật Khẩu?</a>
+        }
+    </div>
+</section>

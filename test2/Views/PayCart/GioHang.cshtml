@@ -1,0 +1,160 @@
+﻿@model IEnumerable<DoAn.Models.CartItem>
+@{
+    ViewBag.Title = "PayCart";
+}
+
+<main>
+    <div class="untree_co-section before-footer-section">
+        <div class="container">
+            <div class="row mb-5">
+                <form class="col-md-12" method="post">
+                    <div class="site-blocks-table">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="product-thumbnail">Hình</th>
+                                    <th class="product-name">Sản Phẩm</th>
+                                    <th class="product-price">Giá</th>
+                                    <th class="product-quantity">Số Lượng</th>
+                                    <th class="product-total">Tổng Tiền</th>
+                                    <th class="product-remove">Xóa</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @{
+                                    decimal count = 0;
+                                    foreach (var item in Model)
+                                    {
+                                        decimal totalPrice = item.GiaSanPham * item.SoLuong;
+                                        count += totalPrice;
+                                        <tr>
+                                            <td class="product-thumbnail">
+                                                <img src="@Url.Content(item.LinkHinhAnh)" alt="Image" class="img-fluid">
+                                            </td>
+                                            <td class="product-name ">
+                                                <h2 class="h5 text-black">@item.TenSanPham</h2>
+                                                <div class="d-flex justify-content-center align-items-center">
+                                                    @{
+                                                        string loaiSizeValue = @item.LoaiSize; // Get the value of LoaiSize
+                                                    }
+                                                    @if (@item.IdSizeSp != "SIZENONE")
+                                                    {
+                                                        <label><b>Size </b></label>
+                                                        <select class="form-control size-dropdown" data-id="@item.IdGioHang" style="width: auto; text-align: center;">
+                                                            <option value="" @(string.IsNullOrEmpty(loaiSizeValue) ? "selected" : "")></option>
+                                                            @if (@item.IdSizeSp == "SIZECODE")
+                                                            {
+                                                                <option value="M" @(loaiSizeValue == "M" ? "selected" : "")>M</option>
+                                                                <option value="L" @(loaiSizeValue == "L" ? "selected" : "")>L</option>
+                                                                <option value="XL" @(loaiSizeValue == "XL" ? "selected" : "")>XL</option>
+                                                                <option value="XXL" @(loaiSizeValue == "XXL" ? "selected" : "")>XXL</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="41" @(loaiSizeValue == "41" ? "selected" : "")>41</option>
+                                                                <option value="42" @(loaiSizeValue == "42" ? "selected" : "")>42</option>
+                                                                <option value="43" @(loaiSizeValue == "43" ? "selected" : "")>43</option>
+                                                                <option value="44" @(loaiSizeValue == "44" ? "selected" : "")>44</option>
+                                                            }
+                                                        </select>
+                                                    }
+                                                </div>
+                                            </td>
+                                            <td>@item.GiaSanPham.ToString("C2")</td>
+                                            <td>
+                                                <div class="input-group mb-3 d-flex align-items-center quantity-container" style="max-width: 120px;">
+                                                    <div class="input-group-prepend">
+                                                        <a href="@Url.Action("DecreaseQuantity", "PayCart", new { idGioHang = item.IdGioHang })">
+                                                            <button class="btn btn-outline-black decrease" type="button">&minus;</button>
+                                                        </a>
+                                                    </div>
+                                                    <input type="text" class="form-control text-center quantity-amount" value="@item.SoLuong" placeholder="" aria-label="Quantity" aria-describedby="button-addon1">
+                                                    <div class="input-group-append">
+                                                        <a href="@Url.Action("IncreaseQuantity", "PayCart", new { idGioHang = item.IdGioHang })">
+                                                            <button class="btn btn-outline-black increase" type="button">&plus;</button>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>@string.Format("{0:N0}", totalPrice)</td>
+                                            <td><a href="@Url.Action("RemoveFromCart", "PayCart", new { idGioHang = item.IdGioHang })" class="btn btn-black btn-sm">X</a></td>
+                                        </tr>
+                                    }
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Additional content for the cart totals and buttons... -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row mb-5">
+                        <div class="col-md-6 mb-3 mb-md-0">
+                            <button class="btn btn-black btn-sm btn-block">Cập nhật giỏ</button>
+                        </div>
+                        <div class="col-md-6">
+                            <button class="btn btn-outline-black btn-sm btn-block">Tiếp Tục Mua</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="text-black h4" for="coupon">Phiêú giảm giá</label>
+                            <p>Nhập code nếu bạn có 1 cái</p>
+                        </div>
+                        <div class="col-md-8 mb-3 mb-md-0">
+                            <input type="text" class="form-control py-3" id="coupon" placeholder=" Code">
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-black">Dùng Mã</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 pl-5">
+                    <div class="row justify-content-end">
+                        <div class="col-md-7">
+                            <div class="row">
+                                <div class="col-md-12 text-right border-bottom mb-5">
+                                    <h3 class="text-black h4 text-uppercase">Tổng Giỏ Hàng</h3>
+                                </div>
+                            </div>
+                            <div class="row mb-5">
+                                <div class="col-md-6">
+                                    <span class="text-black">Tổng</span>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <strong class="text-black">@string.Format("{0:N0}", count)</strong>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <a href='@Url.Action("CheckOut", "PayCart")'>
+                                        <button class="btn btn-black btn-lg py-3 btn-block">
+                                            Mua Ngay
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+  document.querySelectorAll('.size-dropdown').forEach(function (dropdown) {
+    dropdown.addEventListener('change', function () {
+        const selectedSize = this.value || 'NULL'; // Use 'NULL' for empty selection
+        const cartItemId = this.getAttribute('data-id');
+
+        // Redirect to the ReSize action with the necessary parameters
+        window.location.href = '@Url.Action("ReSize", "PayCart")' + '?idGioHang=' + cartItemId + '&LoaiSize=' + encodeURIComponent(selectedSize);
+    });
+});
+</script>

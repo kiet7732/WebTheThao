@@ -1,0 +1,166 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh toán QR</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @@media (max-width: 768px) {
+            .qr-wrapper {
+                margin-top: 2rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <form action="@Url.Action("PlaceOrder", "PayCart")" method="post">
+
+        <input type="hidden" name="paymentMethod" value="chuyenkhoangForm" />
+        <input type="hidden" id="c_fname" name="FirstName" value="@ViewBag.FirstName">
+        <input type="hidden" id="c_lname" name="LastName" value="@ViewBag.LastName">
+        <input type="hidden" id="c_address" name="Address" value="@ViewBag.Address">
+        <input type="hidden" name="Apartment" value="@ViewBag.Apartment">
+        <input type="hidden" id="c_phone" name="Phone" value="@ViewBag.SDT">
+        <input type="hidden" id="c_email_address" name="EmailAddress" value="@ViewBag.Email">
+        <input type="hidden" id="c_order_notes" name="OrderNotes" value="@ViewBag.OrderNotes">
+
+        <div class="container py-3">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Thanh toán QR</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <!-- Thông tin bên trái -->
+                        <div class="col-md-7 border-end">
+                            <!-- Thông tin đơn hàng -->
+                            <div class="mb-4">
+                                <h5 class="text-muted mb-4">Thông tin đơn hàng</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-borderless">
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-muted">Mã đơn hàng:</td>
+                                                <td class="fw-bold"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-muted">Số tiền:</td>
+                                                <td class="fw-bold text-primary fs-4">@string.Format("{0:N0}", ViewBag.totalAmount) VNĐ</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-muted">Nội dung:</td>
+                                                <td>Thanh toán đơn hàng</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-muted">Cửa hàng:</td>
+                                                <td>K-BadN</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Thời gian đếm ngược -->
+                            <div class="alert alert-warning">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-clock me-2"></i>
+                                    <div>
+                                        <div class="fw-bold">Thời gian còn lại</div>
+                                        <div id="timer" class="fs-4">15:00</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hướng dẫn -->
+                            <div class="mb-4">
+                                <h5 class="text-muted mb-3">Hướng dẫn thanh toán</h5>
+                                <div class="list-group">
+                                    <div class="list-group-item">
+                                        <div class="d-flex align-items-center">
+                                            <span class="badge bg-primary rounded-pill me-2">1</span>
+                                            Mở ứng dụng ngân hàng của bạn
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item">
+                                        <div class="d-flex align-items-center">
+                                            <span class="badge bg-primary rounded-pill me-2">2</span>
+                                            Chọn tính năng quét mã QR
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item">
+                                        <div class="d-flex align-items-center">
+                                            <span class="badge bg-primary rounded-pill me-2">3</span>
+                                            Quét mã và xác nhận thanh toán
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Trạng thái -->
+                            <div class="alert alert-info d-flex align-items-center">
+                                <div class="spinner-border spinner-border-sm text-primary me-2" role="status">
+                                    <span class="visually-hidden">Đang chờ thanh toán...</span>
+                                </div>
+                                <div>Đang chờ thanh toán...</div>
+                            </div>
+                        </div>
+
+                        <!-- Mã QR bên phải -->
+                        <div class="col-md-5">
+                            <div class="qr-wrapper h-100 d-flex flex-column justify-content-center align-items-center">
+                                <img src="~/Content/Images/QR.png" alt="QR Code" class="img-fluid mb-4 border p-2" style="width: 500px; height: auto;">
+                                <div class="d-grid gap-2 w-100">
+
+                                    <button class="btn btn-outline-danger w-100" type="button" onclick="window.location.href='/PayCart/CheckOut'">
+                                        <i class="fas fa-times me-2"></i>Hủy giao dịch
+                                    </button>
+
+                                    <!-- Nút Xác nhận thanh toán -->
+                                    <button class="btn btn-outline-primary w-100" type="submit">
+                                        <i class="fas fa-check-circle me-2"></i>Xác nhận thanh toán
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function startTimer(duration, display) {
+            let timer = duration;
+            const interval = setInterval(function () {
+                const minutes = parseInt(timer / 60, 10);
+                const seconds = parseInt(timer % 60, 10);
+
+                display.textContent = minutes.toString().padStart(2, '0') + ':'
+                    + seconds.toString().padStart(2, '0');
+
+                if (--timer < 0) {
+                    clearInterval(interval);
+                    display.textContent = "00:00";
+                    alert("Hết thời gian thanh toán!");
+                    window.location.href = '/PayCart/CheckOut'; // Chuyển hướng khi hết thời gian
+                }
+            }, 1000);
+        }
+
+        window.onload = function () {
+            const fiveMinutes = 60 * 5; // Đặt thời gian 5 phút
+            const display = document.querySelector('#timer');
+            startTimer(fiveMinutes, display);
+        };
+    </script>
+
+</body>
+</html>

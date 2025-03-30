@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="38556ffb522e402aa26513c13600f4ea" Name="Diagram1">
+        <EntityTypeShape EntityType="WebBanHangModel.Chat" Width="1.5" PointX="5.25" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebBanHangModel.ChiTietDonHang" Width="1.5" PointX="7.5" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebBanHangModel.DonHang" Width="1.5" PointX="5.25" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebBanHangModel.GioHang" Width="1.5" PointX="8.25" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebBanHangModel.HangSanPham" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebBanHangModel.KichCo" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebBanHangModel.LoaiSanPham" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebBanHangModel.SanPham" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebBanHangModel.sysdiagrams" Width="1.5" PointX="9.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebBanHangModel.Users" Width="1.5" PointX="3" PointY="9.25" IsExpanded="true" />
+        <AssociationConnector Association="WebBanHangModel.FK__Chat__IdUser__3C34F16F" ManuallyRouted="false" />
+        <AssociationConnector Association="WebBanHangModel.FK__ChiTietDo__IdDon__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="WebBanHangModel.FK__DonHang__IdSanPh__35BCFE0A" ManuallyRouted="false" />
+        <AssociationConnector Association="WebBanHangModel.FK__DonHang__IdUser__36B12243" ManuallyRouted="false" />
+        <AssociationConnector Association="WebBanHangModel.FK__GioHang__IdSanPh__4AB81AF0" ManuallyRouted="false" />
+        <AssociationConnector Association="WebBanHangModel.FK__GioHang__IdUser__49C3F6B7" ManuallyRouted="false" />
+        <AssociationConnector Association="WebBanHangModel.FK__SanPham__HangSan__31EC6D26" ManuallyRouted="false" />
+        <AssociationConnector Association="WebBanHangModel.FK__SanPham__IdSizeS__32E0915F" ManuallyRouted="false" />
+        <AssociationConnector Association="WebBanHangModel.FK__SanPham__LoaiSan__30F848ED" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

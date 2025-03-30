@@ -1,0 +1,141 @@
+﻿@model PagedList.IPagedList<DoAn.Models.SanPham>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Quản Lý Sản Phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<!-- Breadcrumbs-->
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/Admin/Homes">Trang Chủ</a>
+    </li>
+    <li class="breadcrumb-item active">Quản lý sản phẩm</li>
+</ol>
+
+@using (Html.BeginForm("Index", "Product", FormMethod.Get))
+{
+    <div class="row">
+        <div class="col-md-4">
+            <input class="form-control" type="text" name="searchString" placeholder="Nhập từ khóa cần tìm kiếm..." value="@Request.QueryString["searchString"]" />
+        </div>
+        <button type="submit" class="btn-danger btn-sm"><i class="fas fa-search"></i> Tìm kiếm</button>
+
+        <!-- Align the button to the right with Bootstrap classes and custom styling for blue color -->
+
+    </div>
+    <div class=" " style="margin-top: 10px;">
+        <a href="/Admin/Product/Create" >
+            <button type="button" class="btn btn-info  btn-sm"><i class=""></i> Thêm Sản Phẩm</button>
+        </a>
+    </div>
+}
+
+
+<br />
+<table class="table table-hover table-striped table-bordered">
+    <thead>
+        <tr class="text-center">
+            <th>Id sản phẩm</th>
+            <th>Tên sản phẩm</th>
+            <th>Ảnh</th>
+            <th>Loại</th>
+            <th>Có thể bán</th>
+            <th>Trạng thái</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody class="text-center">
+        @foreach (var item in Model)
+        {
+            <tr id="row_@item.IdSanPham">
+                <td>@item.IdSanPham</td>
+                <td>@item.TenSanPham</td>
+                <td>
+                    <img src="@Url.Content(item.LinkHinhAnh)" alt="Ảnh sản phẩm" width="80" height="80" />
+                </td>
+                <td>@item.IdSizeSp</td>
+                <td>@item.SoLuongTon</td>
+                <td>
+                    @if (item.LinkSanPham == "Ngừng Bán")
+                    {
+                        <p class="badge bg-danger text-white">Ngừng Bán</p>
+                    }
+                    else
+                    {
+                        if (item.SoLuongTon < 0)
+                        {
+                            <p class="badge bg-danger text-white">Hết Hàng</p>
+                        }
+                        else
+                        {
+                            <p class="badge bg-success text-white">Đang Bán</p>
+                        }
+                    }
+                </td>
+                <td>
+                    <a href="/Admin/Product/Edit/@item.IdSanPham" class="btn btn-info btn-sm"><i class="fas fa-user-edit"></i> Sửa </a>
+                    <a href="@Url.Action("NgungBan", "Product", new { id = item.IdSanPham })" class="btn btn-info btn-sm">Ngừng Bán | Mở Bán</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+<!-- Phân trang -->
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }),
+    new PagedListRenderOptions
+    {
+        UlElementClasses = new[] { "pagination" },
+        LiElementClasses = new[] { "page-item" },
+        LinkToPreviousPageFormat = "Trước",
+        LinkToNextPageFormat = "Kế Tiếp",
+         FunctionToTransformEachPageLink = (liTag, aTag) =>
+        {
+            // Add Bootstrap classes to the <a> tag
+            aTag.AddCssClass("page-link");
+            liTag.InnerHtml = aTag.ToString();
+            return liTag;
+        }
+    })
+
+
+<script>
+
+    $(document).ready(function () {
+        // Xử lý sự kiện click nút xóa
+        $(document).on('click', '.btn-danger', function (e) {
+            e.preventDefault();
+            var btn = $(this);
+            var id = btn.data('id');
+
+            // Hiển thị confirm dialog
+            if (confirm('Bạn có muốn xóa sản phẩm này ?')) {
+                // Gọi Ajax để xóa
+                $.ajax({
+                    url: 'Admin/Product/Delete/' + id, // Thay Controller bằng tên controller của bạn
+                    type: 'DELETE',
+                    success: function (result) {
+                        if (result.success) {
+                            // Xóa row khỏi table
+                            $('#row_' + id).fadeOut(function () {
+                                $(this).remove();
+                            });
+                            // Có thể thêm thông báo thành công
+                            alert('Xóa sản phẩm thành công!');
+                        } else {
+                            // Thông báo lỗi nếu xóa không thành công
+                            alert('Có lỗi xảy ra khi xóa sản phẩm!');
+                        }
+                    },
+                    error: function () {
+                        alert('Có lỗi xảy ra khi xóa sản phẩm!');
+                    }
+                });
+            }
+        });
+    });
+
+</script>

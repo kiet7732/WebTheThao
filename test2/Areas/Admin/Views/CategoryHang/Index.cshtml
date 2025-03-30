@@ -1,0 +1,70 @@
+﻿
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@model PagedList.IPagedList<DoAn.Models.HangSanPham>
+@using PagedList.Mvc;
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/Admin/Homes">Trang Chủ</a>
+    </li>
+    <li class="breadcrumb-item active">Quản lý thể loại</li>
+</ol>
+@using (Html.BeginForm("Index", "CategoryHang", FormMethod.Get))
+{
+    <div class="row">
+        <div class="col-md-6">
+            <input class="form-control" type="text" name="searhString" placeholder="Nhập từ khóa cần tìm kiếm..." />
+
+        </div>
+        <button type="submit" class="btn-danger btn-sm"><i class="fas fa-search"></i> Tìm kiếm</button>
+        <div class="col-md-2">
+            <a href="/Admin/CategoryHang/Create" class="btn btn-success"><i class="fas fa-plus"></i> Thêm thể lọai mới</a>
+        </div>
+    </div>
+}
+<br />
+<table class="table table-hover table-striped table-bordered">
+    <thead>
+        <tr class="text-center">
+            <th>Tên thể loại</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody class="text-center">
+        @foreach (var item in Model)
+        {
+
+            <tr id="row_@item.IdHangSanPham">
+
+                <td>@item.TenHangSanPham</td>
+                <td>
+                    <a href="/Admin/CategoryHang/Edit/@item.IdHangSanPham" class="btn btn-info btn-sm"><i class="fas fa-user-edit"></i> Sửa </a>
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+
+
+<!-- Phân trang -->
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }),
+    new PagedListRenderOptions
+    {
+        UlElementClasses = new[] { "pagination" },
+        LiElementClasses = new[] { "page-item" },
+        LinkToPreviousPageFormat = "Trước",
+        LinkToNextPageFormat = "Kế Tiếp",
+         FunctionToTransformEachPageLink = (liTag, aTag) =>
+        {
+            // Add Bootstrap classes to the <a> tag
+            aTag.AddCssClass("page-link");
+            liTag.InnerHtml = aTag.ToString();
+            return liTag;
+        }
+    })
+

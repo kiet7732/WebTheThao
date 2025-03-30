@@ -1,0 +1,130 @@
+﻿@model DoAn.Models.SanPham
+
+<div class="container">
+    <div class="product-card">
+        <!-- Product Image Section -->
+        <div class="product-image">
+            <img src="@Url.Content(Model.LinkHinhAnh)" alt="Product Image">
+        </div>
+
+        <!-- Product Details Section -->
+        <div class="product-details">
+            <div class="product-title">@Model.TenSanPham</div>
+            <div class="product-price">@string.Format("{0:N0}", Model.GiaSanPham)</div>
+
+            @{
+                <input type="hidden" name="loaiSize" id="loaiSize" value="" />
+                <input type="hidden" name="IdSize" id="IdSize" value="@Model.IdSizeSp" />
+
+                if (Model.IdSizeSp == "SIZENUM")
+                {
+                    <div class="size-options">
+                        <input type="radio" id="size41" name="loaiSizeRadio" value="41" onclick="setSize(this.value)">
+                        <label for="size41">41</label>
+
+                        <input type="radio" id="size42" name="loaiSizeRadio" value="42" onclick="setSize(this.value)">
+                        <label for="size42">42</label>
+
+                        <input type="radio" id="size43" name="loaiSizeRadio" value="43" onclick="setSize(this.value)">
+                        <label for="size43">43</label>
+
+                        <input type="radio" id="size44" name="loaiSizeRadio" value="44" onclick="setSize(this.value)">
+                        <label for="size44">44</label>
+                    </div>
+                }
+                else if (Model.IdSizeSp == "SIZECODE")
+                {
+                    <div class="size-options">
+                        <input type="radio" id="M" name="loaiSizeRadio" value="M" onclick="setSize(this.value)">
+                        <label for="M">M</label>
+
+                        <input type="radio" id="L" name="loaiSizeRadio" value="L" onclick="setSize(this.value)">
+                        <label for="L">L</label>
+
+                        <input type="radio" id="XL" name="loaiSizeRadio" value="XL" onclick="setSize(this.value)">
+                        <label for="XL">XL</label>
+
+                        <input type="radio" id="XXL" name="loaiSizeRadio" value="XXL" onclick="setSize(this.value)">
+                        <label for="XXL">XXL</label>
+                    </div>
+                }
+
+                <div class="product-status">
+                    Tình trạng:
+                    @{
+                        if (Model.SoLuongTon > 0)
+                        {
+                            <span style="color: green;">Còn hàng</span>
+                        }
+                        else
+                        {
+                            <span style="color: red;">Hết hàng</span>
+                        }
+                    }
+                </div>
+                if (Model.LinkSanPham != "Ngừng Bán")
+                {
+                    <button class="buy-button" onclick="addToCart('@Model.IdSanPham')">Mua Ngay</button>
+                }
+                else
+                {
+                    <button class="buy-button">Sản Phẩm Đã Ngừng Bán</button>
+                }
+
+            }
+        </div>
+    </div>
+    <div class="product-description">
+        <h3 class="description-title">Chi tiết sản phẩm</h3>
+        <div class="description-content">
+            @Html.Raw(Model.MoTaSanPham)
+        </div>
+    </div>
+</div>
+
+<script>
+    function setSize(size) {
+        document.getElementById('loaiSize').value = size; // Set the selected size value to hidden input
+    }
+
+    function addToCart(idSanPham) {
+        var loaiSize = document.getElementById('loaiSize').value;
+        var IdSize = document.getElementById('IdSize').value;
+
+        if (!loaiSize && IdSize !== "SIZENONE") {
+            alert("Vui lòng chọn kích thước trước khi thêm vào giỏ hàng!");
+            return;
+        }
+
+        //console.log("Adding to cart. Product ID: ", idSanPham, " Size: ", loaiSize);
+
+        window.location.href = '@Url.Action("AddToCart", "Cart")' + '?idSanPham=' + idSanPham + '&loaiSize=' + String(loaiSize);
+    }
+</script>
+
+<style>
+    .product-description {
+        width: 100%;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        padding: 15px;
+        margin-top: 20px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .product-card {
+        background-color: #f9f9f9;
+        margin-top:15px;
+    }
+
+    .description-content img {
+        max-width: 900px;
+        height: auto;
+    }
+
+    .description-content {
+        line-height: 1.6;
+        color: #666;
+        text-align: justify;
+    }
+</style>
