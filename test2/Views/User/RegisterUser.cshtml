@@ -1,0 +1,54 @@
+﻿@model DoAn.Models.Users
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.Message
+    </div>
+}
+<section id="registerSection" class="login_box_area section_gap mx-auto">
+    <div class="login_form_inner h-auto mx-auto">
+        <h3>Register</h3>
+        @using (Html.BeginForm("RegisterUser", "User", FormMethod.Post, new { id = "registerForm", novalidate = "novalidate" }))
+        {
+            <div class="col-md-12 form-group">
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "Username", onfocus = "this.placeholder = ''", onblur = "this.placeholder = 'Username'" })
+                @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-12 form-group">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email", onfocus = "this.placeholder = ''", onblur = "this.placeholder = 'Email'" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-12 form-group">
+                @Html.TextBoxFor(m => m.SDT, new { @class = "form-control", placeholder = "SDT", onfocus = "this.placeholder = ''", onblur = "this.placeholder = 'SDT'" })
+                @Html.ValidationMessageFor(m => m.SDT, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-12 form-group">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password", onfocus = "this.placeholder = ''", onblur = "this.placeholder = 'Password'" })
+                @Html.ValidationMessageFor(m => m.Password, null, new { @class = "text-danger" })
+            </div>
+            <div class="col-md-12 form-group">
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password", onfocus = "this.placeholder = ''", onblur = "this.placeholder = 'Confirm Password'" })
+                @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-12 form-group">
+                @Html.TextBoxFor(m => m.TenNguoiDung, new { @class = "form-control", placeholder = "Full Name", required = "required", onfocus = "this.placeholder = ''", onblur = "this.placeholder = 'Full Name'" })
+                @Html.ValidationMessageFor(m => m.TenNguoiDung, "", new { @class = "text-danger" })
+            </div>
+            @Html.HiddenFor(m => m.Role, new { Value = "Customer" }) <!--giá trị bắt buộc-->
+            @Html.HiddenFor(m => m.Status, new { Value = "Tài khoản mở" }) <!--giá trị bắt buộc-->
+            <div class="col-md-12 form-group">
+                <div class="creat_account flex-row flex">
+                    <div class="d-flex justify-content-start">
+                        <input type="checkbox" id="keepMeLoggedIn" name="selector">
+                        <label for="keepMeLoggedIn">Keep me logged in</label>
+                        <a href="/User/LoginUser" class="margin-left" style="padding-left: 20px;" id="loginLink">Đăng Nhập</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 form-group">
+                <button type="submit" class="btn btn-outline-black btn-sm btn-block">REGISTER</button>
+            </div>
+        }
+    </div>
+</section>

@@ -1,0 +1,63 @@
+﻿@model PagedList.IPagedList<DoAn.Models.SanPham>
+
+@{
+    ViewBag.Title = "Kết quả tìm kiếm";
+}
+
+<main>
+    <div class="container">
+        <div class="product-section">
+
+            <div class="row">
+                @if (Model == null || !Model.Any())
+                {
+                    <div class="col-16 text-center n">
+                        <h3>Không tìm thấy sản phẩm nào phù hợp với từ khóa của bạn.</h3>
+                    </div>
+                }
+                else
+                {
+                    <div class="product-section">
+                        <div class="container mt-5">
+                            <div class="col-md-6 mb-5">
+                                <h2 class="section-title">Kết quả tìm kiếm </h2>
+                            </div>
+                            <div class="row">
+                                @{
+                                    foreach (var sanPham in Model)
+                                    {
+                                        <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+                                            <div class="product-item" data-id="@sanPham.IdSanPham">
+                                                <a href="@Url.Action("DetailProduct","Shop",new { id = sanPham.IdSanPham })" style="text-decoration: none;">
+                                                    <img src="@Url.Content(sanPham.LinkHinhAnh)" class="img-fluid product-thumbnail">
+                                                    <h3 class="product-title">@sanPham.TenSanPham</h3>
+                                                    <strong class="product-price">@string.Format("{0:N0}", @sanPham.GiaSanPham)</strong>
+                                                </a>
+
+                                                <a href="@Url.Action("AddToCart","Cart",new { idSanPham = sanPham.IdSanPham , loaiSize = ""})">
+                                                    <span class="icon-cross">
+                                                        <img src="~/Content/Images/cross.svg" class="img-fluid">
+                                                    </span>
+                                                </a>
+
+                                            </div>
+                                        </div>
+                                    }
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</main>
+
+<style>
+    .n{
+        padding: 3.2rem 0; /* Thêm padding trên và dưới */
+        text-align: center; /* Căn giữa nội dung văn bản */
+    }
+
+</style>

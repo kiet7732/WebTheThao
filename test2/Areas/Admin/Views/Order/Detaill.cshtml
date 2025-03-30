@@ -1,0 +1,97 @@
+﻿@model IEnumerable<DoAn.Models.OrderDetail>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Thông tin đơn hàng</h1>
+                </div>
+                <div class="col-6">
+                   
+                    <div class="float-right pt-1">
+                        @foreach (var order in Model)
+                        {
+                            <a href="@Url.Action("ExportToExcel", "Order", new { CodeOrder =@order.CodeOrder })" class="btn btn-primary btn-sm">
+                                Xuất hóa đơn
+                            </a>
+                            break;
+                        }
+                        <a href="@Url.Action("Index", "Order")" class="btn btn-primary btn-sm">
+                            <i class="fas fa-arrow-circle-left"></i>&nbsp; Trở về danh sách đơn hàng
+                        </a>
+                    </div>
+
+                    </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Chi tiết đơn hàng</h3>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                @foreach (var order in Model)
+                {
+                    <div class="col-md-6">
+                        <p><strong>Mã đơn hàng:</strong> @order.IdChiTietDonHang</p>
+                        <p><strong>Ngày đặt hàng:</strong> @order.NgayDatHang</p>
+                        <p><strong>Tên người nhận:</strong> @order.TenNguoiNhan</p>
+                        <p><strong>Số điện thoại:</strong> @order.SDT</p>
+                        <p><strong>Địa chỉ:</strong> @order.DiaChi</p>
+                        <p><strong>Email:</strong> @order.Email</p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p><strong>Tin nhắn:</strong> @order.TinNhan</p>
+                        <p><strong>Tình trạng thanh toán:</strong> @order.TinhTrangThanhToan</p>
+                        <p><strong>Phương thức thanh toán:</strong> @order.PhuongThucThanhToan</p>
+                        <p><strong>Mã đơn hàng:</strong> @order.CodeOrder</p>
+                        <p><strong>Tổng tiền:</strong> @order.TongTien.ToString("C2")</p>
+                        <p><strong>Trình trạng:@order.Status</strong></p>
+                    </div>
+                    break;
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th class="py-3 font-weight-medium">Mã Sản Phẩm</th>
+                <th class="py-3 font-weight-medium">Tên Sản Phẩm</th>
+                <th class="py-3 font-weight-medium">Số Lượng</th>
+                <th class="py-3 font-weight-medium">Size</th>
+                <th class="py-3 font-weight-medium">Giá Tiền</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                foreach (var product in order.SanPhams)
+                {
+                    <tr>
+                        <td>@product.IdSanPham</td> <!-- Product ID (or Name if you prefer) -->
+                        <td>@product.TenSP</td>
+                        <td>@product.SoLuong</td>
+                        <td>@product.LoaiSize</td>
+                        <td>@product.GiaSanPham.ToString("C2")</td> <!-- Format currency -->
+                    </tr>
+                }
+                <tr>
+                    <td colspan="4" class="text-end font-weight-bold">Tổng Thành Tiền:</td>
+                    <td class="font-weight-bold">@order.TongTien.ToString("C2")</td> <!-- Format currency -->
+                </tr>
+                break;
+            }
+        </tbody>
+    </table>
+</div>

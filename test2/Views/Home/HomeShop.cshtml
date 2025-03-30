@@ -1,0 +1,324 @@
+﻿@using DoAn.Models
+@{
+    ViewBag.Title = "HomeShop";
+    WebBanHangEntities Data = new WebBanHangEntities();
+}
+
+
+<div style="position: relative;">
+    <!-- Image as the background -->
+    <img src="~/Content/Images/Background.jpg" style="display: block; width: 100%; max-width: 100%; margin-left: 0; border-radius: 10px;" />
+
+    <!-- Text and buttons positioned at the bottom of the image -->
+    <div style="position: absolute; bottom: 5px; left: 20px; right: 20px; color: white;">
+        <p>
+            <a href="/Shop/index" class="btn btn-secondary me-2">Xem Ngay</a>
+            <a href="#" class="btn btn-white-outline">Khám phá</a>
+        </p>
+        <p class="">
+            Vấn đề nằm ở phụ kiện, hãy mua ngay để đánh hay hơn.
+        </p>
+    </div>
+</div>
+
+<main>
+    @{
+        int count = 0;
+    }
+
+    <!-- Start Product Section -->
+    <div class="product-section">
+        <div class="container mt-5">
+            <div class="row">
+
+                <!-- Start Column 1 -->
+                <div class="col-md-12 col-lg-3 mb-5 mb-lg-0">
+                    <h2 class="mb-4 section-title">Mua ở đây chứ đâu.</h2>
+                    <p class="mb-4">
+                        Cho đến cuối đời, ai cũng muốn làm dân chơi cả,
+                        Ngần ngại gì mà không mua để làm dân chơi.
+                    </p>
+                    <p><a href="/Shop/index" class="btn">Mua Ngay</a></p>
+                </div>
+                <!-- End Column 1 -->
+                <!-- Start Column 2 -->
+                @{
+
+                    var sanpham = Data.SanPham.ToList();
+
+                    foreach (var sanPham in sanpham)
+                    {
+                        if (count >= 3)
+                        {
+                            break;
+                        }
+                        <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+                            <div class="product-item" data-id="@sanPham.IdSanPham">
+                                <a href="@Url.Action("DetailProduct","Shop",new { id = sanPham.IdSanPham })" style="text-decoration: none;">
+                                    <img src="@Url.Content(sanPham.LinkHinhAnh)" class="img-fluid product-thumbnail">
+                                    <h3 class="product-title">@sanPham.TenSanPham</h3>
+                                    <strong class="product-price">@string.Format("{0:N0}", @sanPham.GiaSanPham)</strong>
+                                </a>
+
+                                <a href="@Url.Action("AddToCart","Cart",new { idSanPham = sanPham.IdSanPham , loaiSize = ""})">
+                                    <span class="icon-cross">
+                                        <img src="~/Content/Images/cross.svg" class="img-fluid">
+                                    </span>
+                                </a>
+
+                            </div>
+                        </div>
+                        count++;
+                    }
+                }
+                <!-- End Column 4 -->
+
+            </div>
+        </div>
+    </div>
+
+    <!--Thong tin chung -->
+    <div class="product-section">
+
+        <div class="container">
+            <div class="col-md-6 mb-5">
+                <h2 class="section-title">Giày cực cháy</h2>
+            </div>
+            <div class="row">
+
+                @{
+                    var sanphamGiay = Data.SanPham
+                                .Where(SanPham => SanPham.LoaiSanPham == "LSP001") // Lọc theo LoaiSanPham
+                                .Take(4) // Chỉ lấy 4 sản phẩm
+                                .ToList();
+
+                    foreach (var sanPham in sanphamGiay)
+                    {
+                        <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+                            <div class="product-item" data-id="@sanPham.IdSanPham">
+                                <a href="@Url.Action("DetailProduct","Shop",new { id = sanPham.IdSanPham })" style="text-decoration: none;">
+                                    <img src="@Url.Content(sanPham.LinkHinhAnh)" class="img-fluid product-thumbnail">
+                                    <h3 class="product-title">@sanPham.TenSanPham</h3>
+                                    <strong class="product-price">@string.Format("{0:N0}", @sanPham.GiaSanPham)</strong>
+                                </a>
+
+                                <a href="@Url.Action("AddToCart","Cart",new { idSanPham = sanPham.IdSanPham , loaiSize = (string?)null})">
+                                    <span class="icon-cross">
+                                        <img src="~/Content/Images/cross.svg" class="img-fluid">
+                                    </span>
+                                </a>
+
+                            </div>
+                        </div>
+                    }
+                }
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="product-section">
+
+        <div class="container">
+            <div class="col-md-6 mb-5">
+                <h2 class="section-title">Balo căng cực</h2>
+            </div>
+            <div class="row">
+
+                @{
+                    var sanphamBalo = Data.SanPham
+                                .Where(sp => sp.LoaiSanPham == "LSP002") // Lọc theo LoaiSanPham
+                                .Take(4) // Chỉ lấy 4 sản phẩm
+                                .ToList();
+
+                    foreach (var sanPham in sanphamBalo)
+                    {
+                        <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+                            <div class="product-item" data-id="@sanPham.IdSanPham">
+                                <a href="@Url.Action("DetailProduct","Shop",new { id = sanPham.IdSanPham })" style="text-decoration: none;">
+                                    <img src="@Url.Content(sanPham.LinkHinhAnh)" class="img-fluid product-thumbnail">
+                                    <h3 class="product-title">@sanPham.TenSanPham</h3>
+                                    <strong class="product-price">@string.Format("{0:N0}", @sanPham.GiaSanPham)</strong>
+                                </a>
+
+                                <a href="@Url.Action("AddToCart","Cart",new { idSanPham = sanPham.IdSanPham , loaiSize = (string?)null})">
+                                    <span class="icon-cross">
+                                        <img src="~/Content/Images/cross.svg" class="img-fluid">
+                                    </span>
+                                </a>
+
+                            </div>
+                        </div>
+                    }
+                }
+
+            </div>
+        </div>
+    </div>
+
+    <div class="product-section">
+
+        <div class="container">
+            <div class="col-md-6 mb-5">
+                <h2 class="section-title">Áo tiêu biểu</h2>
+            </div>
+            <div class="row">
+
+                @{
+                    var sanphamÁo = Data.SanPham
+                                .Where(sp => sp.LoaiSanPham == "LSP003") // Lọc theo LoaiSanPham
+                                .Take(4) // Chỉ lấy 4 sản phẩm
+                                .ToList();
+
+                    foreach (var sanPham in sanphamÁo)
+                    {
+                        <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+                            <div class="product-item" data-id="@sanPham.IdSanPham">
+                                <a href="@Url.Action("DetailProduct","Shop",new { id = sanPham.IdSanPham })" style="text-decoration: none;">
+                                    <img src="@Url.Content(sanPham.LinkHinhAnh)" class="img-fluid product-thumbnail">
+                                    <h3 class="product-title">@sanPham.TenSanPham</h3>
+                                    <strong class="product-price">@string.Format("{0:N0}", @sanPham.GiaSanPham)</strong>
+                                </a>
+
+                                <a href="@Url.Action("AddToCart","Cart",new { idSanPham = sanPham.IdSanPham , loaiSize = (string?)null})">
+                                    <span class="icon-cross">
+                                        <img src="~/Content/Images/cross.svg" class="img-fluid">
+                                    </span>
+                                </a>
+
+                            </div>
+                        </div>
+                    }
+                }
+
+            </div>
+        </div>
+    </div>
+
+    <div class="product-section">
+
+        <div class="container">
+            <div class="col-md-6 mb-5">
+                <h2 class="section-title">Quần tiêu biểu</h2>
+            </div>
+            <div class="row">
+
+                @{
+                    var sanphamQuan = Data.SanPham
+                                .Where(sp => sp.LoaiSanPham == "LSP004") // Lọc theo LoaiSanPham
+                                .Take(4) // Chỉ lấy 4 sản phẩm
+                                .ToList();
+
+                    foreach (var sanPham in sanphamQuan)
+                    {
+                        <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+                            <div class="product-item" data-id="@sanPham.IdSanPham">
+                                <a href="@Url.Action("DetailProduct","Shop",new { id = sanPham.IdSanPham })" style="text-decoration: none;">
+                                    <img src="@Url.Content(sanPham.LinkHinhAnh)" class="img-fluid product-thumbnail">
+                                    <h3 class="product-title">@sanPham.TenSanPham</h3>
+                                    <strong class="product-price">@string.Format("{0:N0}", @sanPham.GiaSanPham)</strong>
+                                </a>
+
+                                <a href="@Url.Action("AddToCart","Cart",new { idSanPham = sanPham.IdSanPham , loaiSize = (string?)null})">
+                                    <span class="icon-cross">
+                                        <img src="~/Content/Images/cross.svg" class="img-fluid">
+                                    </span>
+                                </a>
+
+                            </div>
+                        </div>
+                    }
+                }
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Start Blog Section -->
+    <div class="blog-section">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-md-6">
+                    <h2 class="section-title">Mục Tiêu Biểu</h2>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-12 col-sm-6 col-md-4  mb-md-0">
+                    <div class="post-entry">
+                        <a href="#" class="post-thumbnail">
+                            <img src="~/Content/Images/Ảnh1.png" alt="Image"
+                                 class="img-fluid">
+                        </a>
+                        <div class="post-content-entry">
+                            <h3><a href="#">First Time Home Owner Ideas</a></h3>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6 col-md-4 mb-4 mb-md-0">
+                    <div class="post-entry">
+                        <a href="#" class="post-thumbnail">
+                            <img src="~/Content/Images/Ảnh2.png" alt="Image"
+                                 class="img-fluid">
+                        </a>
+                        <div class="post-content-entry">
+                            <h3><a href="#">How To Keep Your Furniture Clean</a></h3>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6 col-md-4 mb-4 mb-md-0">
+                    <div class="post-entry">
+                        <a href="#" class="post-thumbnail">
+                            <img src="~/Content/Images/Ảnh5.png" alt="Image"
+                                 class="img-fluid">
+                        </a>
+                        <div class="post-content-entry">
+                            <h3><a href="#">Small Space Furniture Apartment Ideas</a></h3>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- End Blog Section -->
+</main>
+
+
+@*<script>
+        console.log("hiu")
+        $(document).ready(function () {
+            $(".add-to-cart-btn").on("click", function (event) {
+                event.preventDefault();
+                const idSanPham = $(this).data("id");
+                const loaiSize = $(this).data("size") || null;
+
+                console.log("hiu")
+
+                $.ajax({
+                    url: "/Cart/AddToCart",
+                    type: 'POST',  // Change to POST
+                    dataType: 'json',
+                    data: { idSanPham: idSanPham, loaiSize: loaiSize },
+                    success: function (response) {
+                        if (response && response.status === true) {
+                            alert("Added to cart successfully!");  // Show success message
+                        } else {
+                            alert("Failed to add to cart.");  // Show error message
+                        }
+                    },
+                    error: function () {
+                        alert("An error occurred while adding to the cart.");
+                    }
+                });
+            });
+        });
+
+    </script>*@

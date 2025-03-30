@@ -1,0 +1,14 @@
+﻿.pagination .page-item .page-link {
+    color: #007bff; /* Default text color */
+    transition: background-color 0.3s; /* Smooth hover effect */
+}
+
+    .pagination .page-item .page-link:hover {
+        background-color: #e9ecef; /* Light background on hover */
+    }
+
+.pagination .page-item.active .page-link {
+    background-color: #007bff; /* Active page background color */
+    color: #fff; /* Active page text color */
+    border-color: #007bff;
+}

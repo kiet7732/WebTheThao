@@ -1,0 +1,76 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<DoAn.Models.Chat>
+@{
+
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/Admin/Homes">Trang Chủ</a>
+    </li>
+    <li class="breadcrumb-item active">Quản lý liên hệ</li>
+</ol>
+@using (Html.BeginForm("Index", "FeedBack", FormMethod.Get))
+{
+    <div class="row">
+        <div class="col-md-6">
+            <input class="form-control" type="text" name="searching" placeholder="Nhập từ khóa cần tìm kiếm..." />
+
+        </div>
+        <button type="submit" class="btn-danger btn-sm"><i class="fas fa-search"></i> Tìm kiếm</button>
+    </div>
+}
+<br />
+<table class="table table-hover table-striped table-bordered">
+    <thead>
+        <tr class="text-center">
+            <th>Độ hài lòng</th>
+            <th>Vấn Đề</th>
+            <th>Nội Dung</th>
+            @*<th>Email</th>*@
+            <th>Trạng thái</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody class="text-center">
+        @foreach (var item in Model)
+        {
+            <tr id="row_@item.IdChat">
+                <td>@item.HaiLong</td>
+                <td>@item.VanDe</td>
+                <td>@item.NoiDung</td>
+                <td>@item.Status</td>
+                <td>
+                    @if (@item.Status == "Mới")
+                    {
+                        <a href="@Url.Action("Done", "FeedBack", new { id = item.IdChat })" class="buttonExport btn btn-success btn-sm"> Xác Nhận </a>
+
+                    }
+                    <a href="@Url.Action("Detaill", "FeedBack", new { id = item.IdChat })" class="btn btn-danger btn-sm far fa-trash-alt">Chi Tiết</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }),
+    new PagedListRenderOptions
+    {
+        UlElementClasses = new[] { "pagination" },
+        LiElementClasses = new[] { "page-item" },
+        LinkToPreviousPageFormat = "Trước",
+        LinkToNextPageFormat = "Kế Tiếp",
+        FunctionToTransformEachPageLink = (liTag, aTag) =>
+        {
+            aTag.AddCssClass("page-link");
+            liTag.InnerHtml = aTag.ToString();
+            return liTag;
+        }
+    })
+
+
+
+
+

@@ -1,0 +1,126 @@
+﻿@model PagedList.IPagedList<DoAn.Models.ChiTietDonHang>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "DanhSachHang";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (Session["idUser"] != null)
+{
+    <main>
+        <div class="container mt-4">
+            <div class="row">
+                <!-- Sidebar for Account Information -->
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Thông tin tài khoản</h5>
+                            <ul class="nav flex-column my__account-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link d-flex align-items-center" href="/User/DanhSachHang">
+                                        <span class="text-muted">Đơn hàng</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link d-flex align-items-center" href="#">
+                                        <span class="text-muted">Thông báo (0)</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link d-flex align-items-center" href="/User/ThongTinND">
+                                        <span class="text-muted">Thông tin cá nhân</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link d-flex align-items-center" href="#" data-toggle="pill">
+                                        <span class="text-muted">Yêu thích</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                            <a class="nav-link d-flex align-items-center" href="/User/ForgotPassword" data-toggle="pill">
+                                <span class="text-muted">Quên mật khẩu</span>
+                            </a>
+                        </li>
+                                <li class="nav-item">
+                                    <a class="nav-link d-flex align-items-center" href="/User/Logout">
+                                        <span class="text-muted">Thoát</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order List Section -->
+                <div class="col-md-9">
+                    <div class="pt-5 pl-md-5 pt-lg-8 pl-lg-9">
+                        <h5 class="font-weight-bold font-size-10 mb-lg-8 pb-xl-1">Đơn hàng</h5>
+                        @if (Model.Count > 0)
+                        {
+                            <table class="table table-bordered table-hover" style="background: none;">
+                                <thead class="thead-light" style="background: none;">
+                                    <tr>
+                                        <th class="py-3 font-weight-medium text-center align-middle">Mã Đơn @Model.Count</th>
+                                        <th class="py-3 font-weight-medium text-center align-middle">Trạng Thái</th>
+                                        <th class="py-3 font-weight-medium text-center align-middle">Hành Động</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr style="background: none;">
+                                            <td class="align-middle text-center">#@item.IdChiTietDonHang</td> <!-- Căn giữa -->
+                                            <td class="align-middle text-center">
+                                                <span class="badge bg-success text-white">@item.Status</span>
+                                            </td>
+                                            <td class="align-middle text-center" style="max-width: 90px;">
+                                                <!-- Căn giữa -->
+                                                <!-- Nút Xem -->
+                                                <a href="/User/ChiTietHoaDon?CodeOrder=@item.CodeOrder" class="btn btn-primary btn-sm d-inline-flex align-items-center">
+                                                    <i class="bi bi-eye me-1"></i> Xem
+                                                </a>
+                                                <!-- Nút Hủy đơn -->
+                                                @if (@item.Status != "Đơn Đã Hủy")
+                                                {
+                                                    <a href="/User/HuyDon?idChiTietDonHang=@item.IdChiTietDonHang" class="btn btn-danger btn-sm d-inline-flex align-items-center ms-2">
+                                                        <i class="bi bi-x-circle me-1"></i> Hủy đơn
+                                                    </a>
+                                                }
+
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <div class="text-center my-5">
+                                <p>Hiện tại bạn chưa có đơn hàng nào.</p>
+                            </div>
+                        }
+
+                        <!-- Pagination -->
+                        <nav aria-label="Page navigation">
+                            @Html.PagedListPager(Model, page => Url.Action("DanhSachHang", new { page = page }),
+                                new PagedListRenderOptions
+                                {
+                                    UlElementClasses = new[] { "pagination justify-content-center" },
+                                    LiElementClasses = new[] { "page-item" },
+                                    LinkToPreviousPageFormat = "Trước",
+                                    LinkToNextPageFormat = "Kế Tiếp",
+                                    FunctionToTransformEachPageLink = (liTag, aTag) =>
+                                    {
+                                        aTag.AddCssClass("page-link");
+                                        liTag.InnerHtml = aTag.ToString();
+                                        return liTag;
+                                    }
+                                })
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+}

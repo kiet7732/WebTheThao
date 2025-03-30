@@ -1,0 +1,75 @@
+﻿@model DoAn.Models.Chat
+@{
+    ViewBag.Title = "Contact";
+}
+<script src="~/Content/ckeditor/ckeditor.js"></script>
+<main>
+    <div class="untree_co-section">
+        <!-- Start Google Maps -->
+        <div class="google-map mb-5">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3199.8606357259305!2d106.67432279599174!3d10.978409083639006!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174d1085e2b1c37%3A0x73bfa5616464d0ee!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBUaOG7pyBE4bqndSBN4buZdA!5e0!3m2!1svi!2s!4v1731251613456!5m2!1svi!2s" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <!-- End Google Maps -->
+        <!-- Start Contact Form -->
+        <div class="untree_co-section py-5">
+            <div class="container">
+                <div class="row justify-content-center">
+
+                    <section class="contact_area section_gap_bottom">
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="contact_info">
+                                    <div class="info_item">
+                                        <i class="lnr lnr-home"></i>
+                                        <h6>Thủ Dầu Hai</h6>
+                                        <p>Bình Dương</p>
+                                    </div>
+                                    <div class="info_item">
+                                        <i class="lnr lnr-phone-handset"></i>
+                                        <h6><a href=""></a>099999999</h6>
+                                        <p>Ngủ nguyên ngày</p>
+                                    </div>
+                                    <div class="info_item">
+                                        <i class="lnr lnr-envelope"></i>
+                                        <h6><a href="mailto:2224801030058@student.tdmu.edu.vn">2224801030058@student.tdmu.edu.vn</a></h6>
+                                        <p>Gửi cho chúng tôi!</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-9">
+                                @using (Html.BeginForm("Index", "Contact", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="HaiLong" name="HaiLong" placeholder="Mức độ hài lòng"
+                                                       onfocus="this.placeholder = ''" onblur="this.placeholder = 'Mức độ hài lòng'" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="VanDe" name="VanDe" placeholder="Tiêu đề"
+                                                       onfocus="this.placeholder = ''" onblur="this.placeholder = 'Tiêu đề'" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-group">
+                                                <textarea class="form-control" name="NoiDung" id="NoiDung" rows="5" placeholder="Tin Nhắn"
+                                                          onfocus="this.placeholder = ''" onblur="this.placeholder = 'Tin Nhắn'" required></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 text-right">
+                                        <button type="submit" value="submit" class="btn btn-primary">Giửi Thư</button>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Contact Form -->
+</main>

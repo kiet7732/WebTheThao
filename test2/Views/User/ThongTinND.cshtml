@@ -1,0 +1,102 @@
+﻿@model DoAn.Models.Users
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.Message
+    </div>
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <!-- Sidebar for Account Information -->
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Thông tin tài khoản</h5>
+                    <ul class="nav flex-column my__account-nav">
+                        <li class="nav-item">
+                            <a class="nav-link d-flex align-items-center" href="/User/DanhSachHang">
+                                <span class="text-muted">Đơn hàng</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link d-flex align-items-center" href="#">
+                                <span class="text-muted">Thông báo (0)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link d-flex align-items-center" href="/">
+                                <span class="text-muted">Thông tin cá nhân</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link d-flex align-items-center" href="#" data-toggle="pill">
+                                <span class="text-muted">Yêu thích</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link d-flex align-items-center" href="/User/ForgotPassword" data-toggle="pill">
+                                <span class="text-muted">Quên mật khẩu</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link d-flex align-items-center" href="/User/Logout">
+                                <span class="text-muted">Thoát</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Registration Form -->
+        <div class="col-md-9">
+            <section id="registerSection" class="login_box_area section_gap">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title text-center mb-4">Thông Tin Người Dùng</h3>
+                        @using (Html.BeginForm("ThongTinND", "User", FormMethod.Post))
+                        {
+                            <div>Tên Người Dùng</div>
+                            <div class="mb-3">
+                                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "Username", required = "required" })
+                                @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                            </div>
+                            <div>Email</div>
+                            <div class="mb-3">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email", required = "required" })
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                            </div>
+                            <div>Số Điện Thoại</div>
+                            <div class="mb-3">
+                                @Html.TextBoxFor(m => m.SDT, new { @class = "form-control", placeholder = "SDT", required = "required" })
+                                @Html.ValidationMessageFor(m => m.SDT, "", new { @class = "text-danger" })
+                            </div>
+                            <div>Họ Tên</div>
+                            <div class="mb-3">
+                                @Html.TextBoxFor(m => m.TenNguoiDung, new { @class = "form-control", placeholder = "Full Name", required = "required" })
+                                @Html.ValidationMessageFor(m => m.TenNguoiDung, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div>Thay Đổi Mật Khẩu (Không bắt buộc)</div>
+                            <div class="mb-3">
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "New Password" })
+                                @Html.ValidationMessageFor(m => m.Password, null, new { @class = "text-danger" })
+                            </div>
+                            <div>Nhập Lại Mật Khẩu Mới</div>
+                            <div class="mb-3">
+                                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password" })
+                                @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">Cập Nhật</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

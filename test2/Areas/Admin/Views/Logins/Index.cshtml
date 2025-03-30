@@ -1,0 +1,71 @@
+﻿
+@model DoAn.Models.Users
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="~/DataImage/icon-book-72-275692.png" type="image/x-icon" />
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Đăng nhập - Website bán hàng - 2022</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="~/Content/Style/Client/sb-admin.css" rel="stylesheet" />
+
+    <link href="~/Content/Style/Client/all.min.css" rel="stylesheet" />
+</head>
+
+<body class="bg-dark">
+    @if (ViewBag.Message != null)
+    {
+        <div class="alert alert-danger">
+            @ViewBag.Message
+        </div>
+    }
+    <div class="container">
+        <div class="card card-login mx-auto mt-5">
+            <div class="card-header">Đăng nhập</div>
+            <div class="card-body">
+
+                @using (Html.BeginForm("LoginUser", "Logins", FormMethod.Post))
+                {
+
+                    <div class="col-md-12 form-group">
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "Username", onfocus = "this.placeholder = ''", onblur = "this.placeholder = 'Username'" })
+                        @Html.ValidationMessageFor(m => m.UserName)
+                    </div>
+                    <div class="col-md-12 form-group">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password", onfocus = "this.placeholder = ''", onblur = "this.placeholder = 'Password'" })
+                        @Html.ValidationMessageFor(m => m.Password)
+                    </div>
+                    <div class="col-md-12 form-group my-10">
+                        <button type="submit" class="btn btn-outline-black btn-sm btn-block ">LOG IN</button>
+                    </div>
+                    <a href="#">Forgot Password?</a>
+                }
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+
+    <script src="~/Content/Client/vendor/jquery/jquery.min.js"></script>
+
+    <script src="~/Content/Client/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+    <!-- Core plugin JavaScript-->
+
+    <script src="~/Content/Client/vendor/jquery-easing/jquery.easing.min.js"></script>
+</body>
+
+</html>
+

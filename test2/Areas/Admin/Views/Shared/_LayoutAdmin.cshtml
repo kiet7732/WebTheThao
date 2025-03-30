@@ -1,0 +1,238 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Trang quản lý</title>
+
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/Style/style.scss" rel="stylesheet" />
+
+    <link href="~/Content/Style/Client/Timeline.css" rel="stylesheet" />
+    <link href="~/Content/Style/Client/toastr.css" rel="stylesheet" />
+    <link href="~/Content/Style/all.min.css" rel="stylesheet" />
+    <link href="~/Content/Style/Client/dataTables.bootstrap4.css" rel="stylesheet" />
+    <link href="~/Content/Style/Client/sb-admin.css" rel="stylesheet" />
+
+    <link href="~/Content/Style/Client/all.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    @*<link href="~/Content/Style/Client/admin/pagination.css" rel="stylesheet" />*@
+
+</head>
+
+<body id="page-top">
+
+    <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
+
+        <a class="navbar-brand mr-1" href="/Admin/Homes">
+            Trang Admin
+        </a>
+
+        <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+            <img src="~/Content/Images/list-dashes.svg">
+        </button>
+
+        <!-- Navbar Search -->
+        <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button">
+                        <img src="~/Content/Images/magnifying-glas.svg">
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Navbar -->
+        @RenderPage("~/Areas/Admin/Views/Shared/_NagvationLayoutAdmin.cshtml")
+
+    </nav>
+
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="sidebar navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/Admin/Homes">
+                    <span>Trang chủ</span>
+                </a>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link " href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span>Quản lí người dùng</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+
+                    <a class="dropdown-item" href="/Admin/Users/Create">Thêm mới quản trị viên</a>
+                    <a class="dropdown-item" href="/Admin/Users/Index">Danh sách người dùng</a>
+
+                </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link " href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span>Quản lí sản phẩm</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+                    <a class="dropdown-item " href="/Admin/Product/Index">Danh sách sản phẩm</a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link " href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span>Quản lí mục</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+                    <a class="dropdown-item " href="/Admin/CategoryHang/Index">Danh sách hãng</a>
+                    <a class="dropdown-item " href="/Admin/Category/Index">Danh sách loại sản phẩm</a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link " href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span>Quản Lý Trợ Giúp</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+
+                    <a class="dropdown-item" href="/Admin/FeedBack/Index">Trợ Giúp</a>
+                </div>
+
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link " href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span>Quản lí đơn hàng</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+                    <a class="dropdown-item" href="/Admin/Order/Index">Danh sách đơn</a>
+                </div>
+
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link " href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span>Quản lí Website</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+                    <a class="dropdown-item" href="#">Quản lý Menu</a>
+                    <a class="dropdown-item" href="#">Quản Lý Silder</a>
+
+                </div>
+
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link " href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span>Thông Kê</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+                    <a class="dropdown-item" href="/Admin/ThongKe/DoanhThu">Doanh Thu</a>
+                    <a class="dropdown-item" href="/Admin/ThongKe/ExportDoanhThuToExcel">In Hóa Dơn</a>
+                </div>
+
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/Admin/Logins/Logout">
+                    <span>Đăng Xuất</span>
+                </a>
+            </li>
+        </ul>
+        @if (TempData["Message"] != null)
+        {
+            <div id="overlay" class="overlay">
+                <div class="notification">
+                    <h2>@TempData["Message"]</h2>
+                    <button class="ok-button" id="clearMessageButton">Ok</button>
+                </div>
+            </div>
+        }
+        <div id="content-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Page Content -->
+                <h1>@ViewBag.Title</h1>
+                <hr>
+                @RenderBody()
+
+            </div>
+            <!-- /.container-fluid -->
+            <!-- Sticky Footer -->
+            <footer class="sticky-footer">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>
+                            Trang quản lý - Website bán hàng
+                        </span>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+        <!-- /.content-wrapper -->
+        @RenderSection("jsFooter", required: false)
+
+    </div>
+    <!-- /#wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Bạn muốn rời?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Bấm "Logout" để rời.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+    $(document).ready(function() {
+        $("#clearMessageButton").on("click", function() {
+            $.ajax({
+                url: '@Url.Action("ClearMessage", "Homes")',
+                type: 'POST',
+                contentType: 'application/json',
+                success: function(response) {
+                console.log(response);  // Debugging step
+                        $("#overlay").hide();
+                },
+                error: function() {
+                    alert("An error occurred. Please try again.");
+                }
+            });
+        });
+    });
+    </script>
+
+</body>
+
+</html>
+

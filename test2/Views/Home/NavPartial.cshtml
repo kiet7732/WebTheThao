@@ -1,0 +1,126 @@
+﻿@using DoAn.Models
+@{
+    WebBanHangEntities Data = new WebBanHangEntities();
+
+    var dem = 0;
+    var soluong = Data.GioHang.ToList();
+    var idUser = Session["idUser"] as string;
+    if (!string.IsNullOrEmpty(idUser))
+    {
+        foreach (var SoLuongSP in soluong)
+        {
+            if (SoLuongSP.IdUser == idUser)
+            {
+                dem++;
+            }
+        }
+    }
+
+}
+
+<nav class="custom-navbar navbar navbar-expand-md navbar-dark bg-dark relative" aria-label="Furni navigation bar">
+
+    <div class="container">
+        <a class="navbar-brand" href="/Home/HomeShop">K-BadN.</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Thêm thanh tìm kiếm -->
+        
+        <div class="collapse navbar-collapse" id="navbarsFurni">
+
+            
+
+            <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+
+
+                <form action="/Home/SearchResults" method="get" class="d-flex me-1">
+                    <div class="input-container">
+                        <input class="form-control me-2" type="search" name="query" placeholder="Tìm kiếm sản phẩm..." aria-label="query">
+                        <button class="search-icon-btn" type="submit">
+                            <i class="fas fa-search"></i> <!-- Biểu tượng kính lúp -->
+                        </button>
+                    </div>
+                </form>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/Home/HomeShop" aria-current="page">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Shop/index">Shop</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Contact/index">Contact us</a>
+                </li>
+            </ul>
+
+            <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+                @if (Session["FullName"] != null)
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="/User/DanhSachHang">
+                            @Session["FullName"]
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="/User/LoginUser">
+                            <img src="~/Content/Images/user.svg" />
+                        </a>
+                    </li>
+                }
+                <li class="nav-item">
+                    <a class="nav-link" href="/PayCart/GioHang"><img src="/Content/Images/cart.svg"></a>
+                </li>
+
+                <li>
+                    <span style="color: white;">@dem</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<style>
+    /* Đặt chiều cao của thanh tìm kiếm là 44px */
+    .navbar .form-control {
+        height: 34px;
+    }
+
+    /* Điều chỉnh chiều cao nút tìm kiếm */
+    .navbar .btn {
+        height: 34px;
+        line-height: 34px; 
+    }
+    .input-container {
+        position: relative;
+        margin-top: 5px;
+    }
+
+    .search-icon-btn {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        border: none;
+        background: transparent;
+        cursor: pointer;
+    }
+
+        .search-icon-btn i {
+            font-size: 1.2rem;
+            color: #999;
+        }
+
+    .form-control {
+        padding-right: 35px; 
+    }
+
+    .search-form .search-btn i {
+        font-size: 14px;
+    }
+
+
+</style>
