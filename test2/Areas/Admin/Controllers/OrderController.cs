@@ -289,7 +289,7 @@ namespace DoAn.Areas.Admin.Controllers
             TempData["Message"] = "Đơn hàng không tồn tại.";
             return RedirectToAction("Index");
         }
-         
+
         public ActionResult HuyDon(string idChiTietDonHang)
         {
             // Lấy đơn hàng theo id
@@ -297,6 +297,7 @@ namespace DoAn.Areas.Admin.Controllers
 
             if (chiTietDonHangs == null)
             {
+                // Nếu không tìm thấy đơn hàng
                 TempData["Message"] = "Không tìm thấy đơn hàng!";
                 return RedirectToAction("Index");
 
