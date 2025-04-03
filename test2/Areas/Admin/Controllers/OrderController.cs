@@ -300,6 +300,10 @@ namespace DoAn.Areas.Admin.Controllers
                 // Nếu không tìm thấy đơn hàng
                 TempData["Message"] = "Không tìm thấy đơn hàng!";
                 return RedirectToAction("Index");
+
+
+
+                //
             }
             // Lấy CodeOrder từ ChiTietDonHang để tìm đơn hàng liên quan
             string codeOrder = chiTietDonHangs.CodeOrder;
