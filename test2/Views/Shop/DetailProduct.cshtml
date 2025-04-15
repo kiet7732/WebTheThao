@@ -4,14 +4,22 @@
     <div class="product-card">
         <!-- Product Image Section -->
         <div class="product-image">
-            <img src="@Url.Content(Model.LinkHinhAnh)" alt="Product Image">
+            <img src="@Url.Content(Model.LinkHinhAnh)" alt="@Model.TenSanPham">
         </div>
 
         <!-- Product Details Section -->
         <div class="product-details">
-            <div class="product-title">@Model.TenSanPham</div>
-            <div class="product-price">@string.Format("{0:N0}", Model.GiaSanPham)</div>
+            <h1 class="product-title">@Model.TenSanPham</h1>
+            <div class="product-price">
+                <span class="current-price">@string.Format("{0:N0}", Model.GiaSanPham) VNĐ</span>
+            </div>
 
+            <!-- Product Status -->
+            <div class="product-status">
+                @Model.SoLuongTon Trong Kho
+            </div>
+
+            <!-- Size Selection -->
             @{
                 <input type="hidden" name="loaiSize" id="loaiSize" value="" />
                 <input type="hidden" name="IdSize" id="IdSize" value="@Model.IdSizeSp" />
@@ -21,13 +29,10 @@
                     <div class="size-options">
                         <input type="radio" id="size41" name="loaiSizeRadio" value="41" onclick="setSize(this.value)">
                         <label for="size41">41</label>
-
                         <input type="radio" id="size42" name="loaiSizeRadio" value="42" onclick="setSize(this.value)">
                         <label for="size42">42</label>
-
                         <input type="radio" id="size43" name="loaiSizeRadio" value="43" onclick="setSize(this.value)">
                         <label for="size43">43</label>
-
                         <input type="radio" id="size44" name="loaiSizeRadio" value="44" onclick="setSize(this.value)">
                         <label for="size44">44</label>
                     </div>
@@ -37,43 +42,29 @@
                     <div class="size-options">
                         <input type="radio" id="M" name="loaiSizeRadio" value="M" onclick="setSize(this.value)">
                         <label for="M">M</label>
-
                         <input type="radio" id="L" name="loaiSizeRadio" value="L" onclick="setSize(this.value)">
                         <label for="L">L</label>
-
                         <input type="radio" id="XL" name="loaiSizeRadio" value="XL" onclick="setSize(this.value)">
                         <label for="XL">XL</label>
-
                         <input type="radio" id="XXL" name="loaiSizeRadio" value="XXL" onclick="setSize(this.value)">
                         <label for="XXL">XXL</label>
                     </div>
                 }
 
-                <div class="product-status">
-                    Tình trạng:
-                    @{
-                        if (Model.SoLuongTon > 0)
-                        {
-                            <span style="color: green;">Còn hàng</span>
-                        }
-                        else
-                        {
-                            <span style="color: red;">Hết hàng</span>
-                        }
-                    }
-                </div>
+                <!-- Buy Button -->
                 if (Model.LinkSanPham != "Ngừng Bán")
                 {
-                    <button class="buy-button" onclick="addToCart('@Model.IdSanPham')">Mua Ngay</button>
+                    <button class="buy-button" onclick="addToCart('@Model.IdSanPham')">Add to cart</button>
                 }
                 else
                 {
-                    <button class="buy-button">Sản Phẩm Đã Ngừng Bán</button>
+                    <button class="buy-button" disabled>Sản phẩm đã ngừng bán</button>
                 }
-
             }
         </div>
     </div>
+
+    <!-- Product Description -->
     <div class="product-description">
         <h3 class="description-title">Chi tiết sản phẩm</h3>
         <div class="description-content">
@@ -84,7 +75,7 @@
 
 <script>
     function setSize(size) {
-        document.getElementById('loaiSize').value = size; // Set the selected size value to hidden input
+        document.getElementById('loaiSize').value = size;
     }
 
     function addToCart(idSanPham) {
@@ -96,35 +87,143 @@
             return;
         }
 
-        //console.log("Adding to cart. Product ID: ", idSanPham, " Size: ", loaiSize);
-
-        window.location.href = '@Url.Action("AddToCart", "Cart")' + '?idSanPham=' + idSanPham + '&loaiSize=' + String(loaiSize);
+        window.location.href = '@Url.Action("AddToCart", "Cart")' + '?idSanPham=' + idSanPham + '&loaiSize=' + String(loaiSize) + '&soLuong=1';
     }
 </script>
 
 <style>
-    .product-description {
-        width: 100%;
-        background-color: #f9f9f9;
-        border-radius: 8px;
-        padding: 15px;
-        margin-top: 20px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        /*padding: 20px;*/
     }
 
     .product-card {
-        background-color: #f9f9f9;
-        margin-top:15px;
+        display: flex;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        padding: 20px;
+        margin-bottom: 20px;
+        gap: 30px;
     }
 
-    .description-content img {
-        max-width: 900px;
-        height: auto;
+    .product-image {
+        flex: 0 0 250px; /* Đảm bảo hình ảnh không vượt quá kích thước */
+    }
+
+        .product-image img {
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+    .product-details {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .product-title {
+        font-size: 24px;
+        font-weight: 700;
+        color: #333;
+    }
+
+    .product-price {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .current-price {
+        font-size: 20px;
+        font-weight: 600;
+        color: #28a745;
+    }
+
+    .product-status {
+        font-size: 14px;
+        color: #333;
+        font-weight: 500;
+    }
+
+    .size-options {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+        .size-options input[type="radio"] {
+            display: none;
+        }
+
+        .size-options label {
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .size-options input[type="radio"]:checked + label {
+            border-color: #007bff;
+            background: #e6f0ff;
+            color: #007bff;
+            font-weight: 600;
+        }
+
+    .buy-button {
+        background: #28a745;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.3s;
+        align-self: flex-start;
+    }
+
+        .buy-button:hover:not(:disabled) {
+            background: #218838;
+        }
+
+        .buy-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+    .product-description {
+        background: #fff;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .description-title {
+        font-size: 20px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 15px;
     }
 
     .description-content {
-        line-height: 1.6;
-        color: #666;
-        text-align: justify;
+        line-height: 1.8;
+        color: #555;
+        font-size: 16px;
     }
+
+        .description-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
 </style>
