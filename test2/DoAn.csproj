@@ -1463,6 +1463,7 @@
     <Content Include="Views\User\ResetPassword.cshtml" />
     <Content Include="Views\PayCart\QRPayment.cshtml" />
     <Content Include="Views\Home\SearchResults.cshtml" />
+    <Content Include="WebBanHang.bacpac" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
